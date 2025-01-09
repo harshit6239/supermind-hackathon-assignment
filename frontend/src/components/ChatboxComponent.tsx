@@ -45,7 +45,7 @@ export default function ChatboxComponent() {
             },
         ]);
 
-        const resp = await axios.get("http://localhost:3000/chatbot", {
+        const resp = await axios.get("/api/chatbot", {
             params: {
                 query: input,
             },

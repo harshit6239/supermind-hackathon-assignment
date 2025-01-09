@@ -1,5 +1,5 @@
 import * as React from "react";
-import { addDays, format } from "date-fns";
+import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 
@@ -12,14 +12,17 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
+interface DateRangeComponentProps {
+    onChange: (range: { startDate: string; endDate: string }) => void;
+    initialRange: { startDate: string; endDate: string };
+    className?: string;
+}
+
 export function DateRangeComponent({
     className,
     onChange,
     initialRange,
-}: React.HTMLAttributes<HTMLDivElement> & {
-    onChange: (range: { startDate: string; endDate: string }) => void;
-    initialRange: { startDate: string; endDate: string };
-}) {
+}: DateRangeComponentProps) {
     const initialFromDate = new Date(initialRange.startDate);
     const initialToDate = new Date(initialRange.endDate);
 

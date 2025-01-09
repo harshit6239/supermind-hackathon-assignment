@@ -1,7 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Linkedin, Mail } from "lucide-react";
 
-const teamMembers = [
+interface TeamMember {
+    name: string;
+    skillset: string;
+    socials: { email: string; linkedin: string };
+    image: string;
+}
+
+const teamMembers: TeamMember[] = [
     {
         name: "Harshit Manchanda",
         skillset: "Frontend Developer",
@@ -17,7 +24,7 @@ const teamMembers = [
     // Add more team members as needed
 ];
 
-function TeamMemberCard({ member }) {
+function TeamMemberCard({ member }: { member: TeamMember }) {
     return (
         <Card className="w-[300px]">
             <CardHeader>

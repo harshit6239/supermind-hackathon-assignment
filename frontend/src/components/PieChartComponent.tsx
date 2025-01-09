@@ -54,7 +54,7 @@ export function PieChartComponent({
         const chartData: {
             category: string;
             [key: string]: number | string;
-            fill?: string;
+            fill: string;
         }[] = [];
         post_types.forEach((type) => {
             const total = data.reduce((acc, curr) => {
@@ -73,7 +73,12 @@ export function PieChartComponent({
             chartData.push({
                 category: type,
                 [basedOnColumn]: total,
-                fill: chartConfig[type as keyof typeof chartConfig]?.color,
+                fill:
+                    (
+                        chartConfig[type as keyof typeof chartConfig] as {
+                            color: string;
+                        }
+                    ).color || "hsl(var(--default-color))",
             });
         });
 

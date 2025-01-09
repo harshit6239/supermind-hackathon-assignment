@@ -7,12 +7,6 @@ import {
 } from "@/components/ui/card";
 import { useState, useEffect } from "react";
 
-// const dummyData = [
-//     { title: "likes", value: "1,200" },
-//     { title: "comment", value: "1,200" },
-//     { title: "shares", value: "1,200" },
-// ];
-
 interface CardComponentProps {
     title: string;
     description: string;

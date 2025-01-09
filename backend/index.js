@@ -16,23 +16,23 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.static(path.join(__dirname, "dist")));
+
 app.get("/", (req, res) => {
-    res.send("Welcome to LangFlow");
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-app.get("/data", (req, res) => {
+app.get("/api/data", (req, res) => {
     const filePath = path.join(__dirname, "data", "social_metric.csv");
-    console.log("File Path:", filePath);
     readFile(filePath, "utf8", (err, data) => {
         if (err) {
             return res.status(500).send(err.message);
         }
         res.send(data);
-        console.log("Data:", data);
     });
 });
 
-app.get("/chatbot", (req, res) => {
+app.get("/api/chatbot", (req, res) => {
     const query = req.query.query;
     console.log("Query:", query);
     if (!query) {

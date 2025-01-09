@@ -8,10 +8,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Papa from "papaparse";
 
+interface PostData {
+    date: string;
+    likes: number;
+    comments: number;
+    shares: number;
+    category: string;
+}
+
 export default function Dashboard() {
     const [columns, setColumns] = useState<string[]>([]);
-    const [data, setData] = useState<object[]>([]);
-    const [filteredData, setFilteredData] = useState<object[]>([]);
+    const [data, setData] = useState<PostData[]>([]);
+    const [filteredData, setFilteredData] = useState<PostData[]>([]);
     const [dateRange, setDateRange] = useState<{
         startDate: string;
         endDate: string;
@@ -21,12 +29,14 @@ export default function Dashboard() {
     });
 
     useEffect(() => {
-        axios.get("http://localhost:3000/data").then((resp) => {
+        axios.get("/api/data").then((resp) => {
             const parsed = Papa.parse(resp.data, { header: true });
             if (parsed.meta.fields) {
                 setColumns(parsed.meta.fields);
             }
-            const newParsedData = parsed.data.map((row: any) => {
+            const newParsedData = (
+                parsed.data as Record<string, string | number>[]
+            ).map((row) => {
                 if (
                     row["likes"] === undefined ||
                     row["comments"] === undefined ||
@@ -34,6 +44,7 @@ export default function Dashboard() {
                     row["category"] === undefined
                 ) {
                     return {
+                        date: row["date"],
                         category: "static_image",
                         likes: 0,
                         comments: 0,
@@ -47,11 +58,12 @@ export default function Dashboard() {
                     shares: Number(row["shares" as keyof typeof row]),
                 };
             });
-            setData(newParsedData as object[]);
+            setData(newParsedData as PostData[]);
 
             if (newParsedData.length > 0) {
-                const startDate = newParsedData[0].date;
-                const endDate = newParsedData[newParsedData.length - 1].date;
+                const startDate = newParsedData[0].date as string;
+                const endDate = newParsedData[newParsedData.length - 1]
+                    .date as string;
                 setDateRange({ startDate, endDate });
             }
         });
@@ -59,7 +71,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         if (dateRange.startDate && dateRange.endDate) {
-            const filtered = data.filter((item: any) => {
+            const filtered = data.filter((item: PostData) => {
                 const itemDate = new Date(item.date);
                 return (
                     itemDate >= new Date(dateRange.startDate) &&
@@ -88,7 +100,13 @@ export default function Dashboard() {
                     <CardComponent
                         title="Post Information"
                         description="Total posts, reels, carousels, and static images"
-                        data={filteredData}
+                        data={filteredData.map((item) => ({
+                            title: item.category,
+                            value: `${
+                                item.likes + item.comments + item.shares
+                            }`,
+                            category: item.category,
+                        }))}
                     />
                     {filteredData.length > 0 &&
                         ["likes", "comments", "shares"].map(
@@ -135,14 +153,14 @@ export default function Dashboard() {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredData.map((row: any, rowIndex) => (
+                            {filteredData.map((row, rowIndex) => (
                                 <tr key={rowIndex}>
                                     {columns.map((column) => (
                                         <td
                                             key={column}
                                             className="py-2 px-4 border-b border-gray-700 text-sm text-gray-300"
                                         >
-                                            {row[column]}
+                                            {row[column as keyof PostData]}
                                         </td>
                                     ))}
                                 </tr>
