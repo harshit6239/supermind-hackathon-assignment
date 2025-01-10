@@ -45,11 +45,14 @@ export default function ChatboxComponent() {
             },
         ]);
 
-        const resp = await axios.get("/api/chatbot", {
-            params: {
-                query: input,
-            },
-        });
+        const resp = await axios.get(
+            "https://socialmetric.onrender.com/api/chatbot",
+            {
+                params: {
+                    query: input,
+                },
+            }
+        );
 
         setMessages((prevMessages) => {
             const newMessages = [...prevMessages];

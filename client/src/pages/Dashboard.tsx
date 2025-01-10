@@ -29,7 +29,7 @@ export default function Dashboard() {
     });
 
     useEffect(() => {
-        axios.get("/api/data").then((resp) => {
+        axios.get("https://socialmetric.onrender.com/api/data").then((resp) => {
             const parsed = Papa.parse(resp.data, { header: true });
             if (parsed.meta.fields) {
                 setColumns(parsed.meta.fields);
