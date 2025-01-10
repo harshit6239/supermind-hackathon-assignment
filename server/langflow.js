@@ -165,24 +165,11 @@ async function main(
             const firstComponentOutputs = flowOutputs.outputs[0];
             const output = firstComponentOutputs.outputs.message;
 
-            // console.log("Final Output:", output.message.text);
             return output.message.text;
         }
     } catch (error) {
         console.error("Main Error", error.message);
     }
 }
-
-// const args = process.argv.slice(2);
-// if (args.length < 1) {
-//     console.error(
-//         'Please run the file with the message as an argument: node <YOUR_FILE_NAME>.js "user_message"'
-//     );
-// }
-// main(
-//     args[0], // inputValue
-//     args[1], // inputType
-//     args[2] // outputType
-// );
 
 export default main;
