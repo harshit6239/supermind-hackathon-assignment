@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Dashboard from "./pages/Dashboard";
-import Team from "./pages/Team";
+// import Team from "./pages/Team";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { SidebarComponent } from "./components/SidebarComponent";
 
@@ -18,10 +18,10 @@ export default function App() {
                                 path="/"
                                 element={<Dashboard />}
                             />
-                            <Route
+                            {/* <Route
                                 path="/team"
                                 element={<Team />}
-                            />
+                            /> */}
                         </Routes>
                     </main>
                 </div>

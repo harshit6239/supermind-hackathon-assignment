@@ -8,7 +8,7 @@ import {
     SidebarMenuItem,
     SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Users } from "lucide-react";
+import { LayoutDashboard } from "lucide-react";
 import { Link } from "react-router";
 
 const items = [
@@ -17,11 +17,11 @@ const items = [
         url: "/",
         icon: LayoutDashboard,
     },
-    {
-        title: "Team",
-        url: "/team",
-        icon: Users,
-    },
+    // {
+    //     title: "Team",
+    //     url: "/team",
+    //     icon: Users,
+    // },
     // {
     //     title: "Calendar",
     //     url: "#",
